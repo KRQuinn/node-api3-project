@@ -5,6 +5,7 @@ function handleError(err, req, res, next) {
     message: err.message,
     prodMessage: 'something went really wrong!',
   })
+  next()
 }
 
 function logger(req, res, next) {
@@ -26,7 +27,7 @@ function validateUserId(req, res, next) {
         req.user = validatingUser
         next()
       } else {
-        next({ status: 404, message: 'not found!' })
+        next({ status: 404, message: 'not found' })
       }
     })
     .catch(next)
@@ -37,7 +38,7 @@ function validateUser(req, res, next) {
   const { name } = req.body
   if (!name) {
     res.status(400).json({
-      message: 'missing required field',
+      message: 'missing required name field',
     })
   } else {
     next()
